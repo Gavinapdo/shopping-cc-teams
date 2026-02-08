@@ -1,0 +1,21 @@
+# 依赖目录
+node_modules/
+frontend/node_modules/
+
+# 构建产物
+frontend/dist/
+backend/server
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 环境变量
+.env
+.env.local
