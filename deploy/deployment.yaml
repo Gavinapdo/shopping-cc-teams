@@ -1,0 +1,47 @@
+# 商品管理系统后端 Deployment 配置
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # 部署名称
+  name: shopping-backend
+  labels:
+    app: shopping-backend
+spec:
+  # 副本数量
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopping-backend
+  template:
+    metadata:
+      labels:
+        app: shopping-backend
+    spec:
+      containers:
+        - name: shopping-backend
+          # 容器镜像
+          image: shopping-backend:latest
+          ports:
+            - containerPort: 8080
+          # 存活探针：检测容器是否正常运行
+          livenessProbe:
+            httpGet:
+              path: /api/products
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          # 就绪探针：检测容器是否准备好接收流量
+          readinessProbe:
+            httpGet:
+              path: /api/products
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          # 资源限制
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
